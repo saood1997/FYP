@@ -1,1 +1,1 @@
-# Fake-Image-Generation-Using-DCGAN-FYP-1-
+# FYP
