@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block content%}
+{%if no_faces%}
+<div class="container">
+  <div class="col-12 my-auto">
+    <div class="logo text-center mb-3"></div>
+    <h1 class="text-center">Deepfake Video Detection</h1>
+  </div>          
+  <!-- <div class="logo text-center mb-3"><img src="{% static 'images/logo1.png'%}" alt="Logo" ></div>
+  <hr /> -->
+    <div class="alert alert-danger">
+      No faces detected. Cannot process the video.
+    </div>
+</div>
+{%else%}
+<div class="container">
+  <div class="col-12 my-auto">
+    <div class="logo text-center mb-3"></div>
+    <h1 class="text-center">Deepfake Video Detection</h1>
+  </div>
+  <!-- <div class="logo text-center mb-3"><img src="{% static 'images/logo1.png'%}" alt="Logo" ></div> -->
+  <hr />
+  <div class="result text-center">
+    <h3>Video</h3>
+      <video height="320" width="640" id="predict-media" controls>
+        <source src="{{MEDIA_URL}}{{original_video}}" type="video/mp4"/>
+    </video>
+
+    <h3>Frames</h3>
+    <div id="preprocessed_images" class="col-12 mt-4 mb-2">
+      {% for each_image in preprocessed_images %}
+      <img src="{%static each_image%}" class="preprocess" width=auto height="350" />
+      {%endfor%}
+    </div>
+
+    <h3>Faces</h3>
+    <div id="faces_images" class="col-12 mb-2">
+      {% for each_image in faces_cropped_images %}
+      <img src="{%static each_image%}" class="faces" width="150" height="150" />
+      {%endfor%}
+    </div>
+
+      {%if output == "REAL" %}
+        <h4 class="mx-auto">Result: <span style="color:green">{{output}}</span>
+      {%else%}
+        <h4 class="mx-auto">Result: <span style="color:red">{{output}}</span>
+      {%endif%}
+  </div>
+{%endif%}
+{%endblock%}
